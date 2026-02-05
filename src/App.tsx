@@ -63,19 +63,7 @@ function App() {
             <h1>Workstream Dashboard</h1>
           ) : (
             <div className="joes-title-wrapper">
-              <h1 className="joes-title" aria-label="Joe's Daily">
-                <span>J</span>
-                <span>O</span>
-                <span>E</span>
-                <span>'</span>
-                <span>S</span>
-                <span>&nbsp;</span>
-                <span>D</span>
-                <span>A</span>
-                <span>I</span>
-                <span>L</span>
-                <span>Y</span>
-              </h1>
+              <h1 className="joes-title">JOE'S DAILY</h1>
               <p className="joes-subtitle">🔥 Stocks</p>
             </div>
           )}
