@@ -59,7 +59,26 @@ function App() {
       <header className="hero">
         <div>
           <p className="eyebrow">Mission Control</p>
-          <h1>{viewMode === 'workstream' ? 'Workstream Dashboard' : "Joe’s Daily Stock Picks"}</h1>
+          {viewMode === 'workstream' ? (
+            <h1>Workstream Dashboard</h1>
+          ) : (
+            <div className="joes-title-wrapper">
+              <h1 className="joes-title" aria-label="Joe's Daily">
+                <span>J</span>
+                <span>O</span>
+                <span>E</span>
+                <span>'</span>
+                <span>S</span>
+                <span>&nbsp;</span>
+                <span>D</span>
+                <span>A</span>
+                <span>I</span>
+                <span>L</span>
+                <span>Y</span>
+              </h1>
+              <p className="joes-subtitle">🔥 Stocks</p>
+            </div>
+          )}
           <p className="subtitle">
             {viewMode === 'workstream'
               ? 'Live view of priorities, progress, and daily summaries. Designed for GitHub Pages and ready for future interactive controls.'

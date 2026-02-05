@@ -773,3 +773,47 @@ code {
   letter-spacing: 0.2em;
   color: #9bb2e4;
 }
+
+.joes-title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+
+.joes-title {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0;
+}
+
+.joes-title span {
+  display: inline-block;
+  padding: 0.08em 0.12em;
+  font-family: 'Courier New', 'Chalkduster', 'Ubuntu Mono', monospace;
+  border-radius: 0.3rem;
+  margin-right: 0.1rem;
+}
+
+.joes-title span:nth-child(odd) {
+  background: #f05d5e;
+  color: #1c0f13;
+}
+
+.joes-title span:nth-child(even) {
+  background: #ffd85d;
+  color: #1a1305;
+}
+
+.joes-subtitle {
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #f9ce4f;
+  margin: 0;
+}
