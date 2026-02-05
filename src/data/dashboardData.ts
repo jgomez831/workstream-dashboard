@@ -26,6 +26,7 @@ export type Agent = {
   status: 'active' | 'standby' | 'blocked';
   focus: string;
   load: number;
+  flair?: string;
 };
 
 export const taskBoard: Record<'todo' | 'inProgress' | 'done', Column> = {
@@ -49,6 +50,15 @@ export const taskBoard: Record<'todo' | 'inProgress' | 'done', Column> = {
         priority: 'medium',
         tags: ['ops'],
         notes: 'Push snapshot into jgomez831/memory-backups each evening.'
+      },
+      {
+        id: 'todo-3',
+        title: 'Joe’s Daily Stock Picks automation plan',
+        owner: 'Primary',
+        due: 'Feb 5',
+        priority: 'medium',
+        tags: ['stocks', 'automation'],
+        notes: 'Wire 6:00 pre-open + 7:45 confirmation cadence into dashboard data layer.'
       }
     ]
   },
@@ -57,21 +67,30 @@ export const taskBoard: Record<'todo' | 'inProgress' | 'done', Column> = {
     tasks: [
       {
         id: 'prog-1',
-        title: 'Powerball insights write-up + dashboard polish',
+        title: 'Powerball insights write-up + number set QA',
         owner: 'Primary',
         due: 'Feb 4',
         priority: 'high',
         tags: ['lottery', 'report'],
-        notes: 'Charts colored, narrative 70% drafted.'
+        notes: 'Charts locked; QA on 50+50 sets underway.'
       },
       {
         id: 'prog-2',
-        title: 'All-sector dividend ladder QA',
+        title: 'Dashboard: sandwich toggle + Joe’s view',
+        owner: 'StackCanvas',
+        due: 'Feb 5',
+        priority: 'high',
+        tags: ['dashboard', 'UI'],
+        notes: 'Implement view switch + placeholders for stock widgets.'
+      },
+      {
+        id: 'prog-3',
+        title: 'Task board data refresh',
         owner: 'Primary',
         due: 'Feb 4',
         priority: 'medium',
-        tags: ['dividends'],
-        notes: 'Validate payout cadence + spreadsheet formatting.'
+        tags: ['dashboard'],
+        notes: 'Update board to reflect new assignments + cadence.'
       }
     ]
   },
@@ -100,7 +119,9 @@ export const taskBoard: Record<'todo' | 'inProgress' | 'done', Column> = {
   }
 };
 
-export const stats = [
+export type StatCard = { label: string; value: number; note?: string };
+
+export const stats: StatCard[] = [
   { label: 'Open Tasks', value: taskBoard.todo.tasks.length + taskBoard.inProgress.tasks.length },
   { label: 'Completed Today', value: taskBoard.done.tasks.length },
   { label: 'Focus Streams', value: 3 }
@@ -129,8 +150,16 @@ export const agents: Agent[] = [
     name: 'Primary',
     role: 'Ops & Research Lead',
     status: 'active',
-    focus: 'Powerball analysis + dashboard deployment',
-    load: 85
+    focus: 'Powerball delivery + orchestration',
+    load: 90,
+    flair: 'Gold Manager'
+  },
+  {
+    name: 'StackCanvas',
+    role: 'Dashboard Dev Lead',
+    status: 'active',
+    focus: 'Sandwich toggle + Joe’s stock widgets',
+    load: 70
   },
   {
     name: 'SignalFire',
@@ -147,3 +176,168 @@ export const agents: Agent[] = [
     load: 10
   }
 ];
+
+
+export type JoeStat = {
+  label: string;
+  value: string;
+  note?: string;
+};
+
+export type JoePick = {
+  symbol: string;
+  company: string;
+  price: string;
+  change: number;
+  flavorNote: string;
+  conviction: 'High Conviction' | 'Momentum Snack' | 'Speculative Bite';
+};
+
+export type MarketMood = {
+  temperature: string;
+  caption: string;
+  score: number;
+  tags: string[];
+};
+
+export type HeatmapCell = {
+  symbol: string;
+  change: number;
+  direction: 'up' | 'down';
+  flavor: string;
+};
+
+export type SnackableInsight = {
+  title: string;
+  snippet: string;
+  action: string;
+};
+
+export type VolumeSpike = {
+  symbol: string;
+  spike: number;
+  context: string;
+  tasteProfile: string;
+};
+
+export type PortfolioPantry = {
+  label: string;
+  allocation: string;
+  dayChange: string;
+  sparkline: number[];
+  note: string;
+};
+
+export type NextBiteAlert = {
+  time: string;
+  text: string;
+  severity: 'info' | 'watch' | 'alert';
+};
+
+export type JoeDashboardData = {
+  stats: JoeStat[];
+  picks: JoePick[];
+  marketMood: MarketMood;
+  watchlistHeatmap: HeatmapCell[];
+  snackableInsights: SnackableInsight[];
+  volumeSpikes: VolumeSpike[];
+  portfolioPantry: PortfolioPantry;
+  nextBites: NextBiteAlert[];
+};
+
+export const joesDailyView: JoeDashboardData = {
+  stats: [
+    { label: 'Pre-Open Preview', value: '6:00 AM PT', note: 'Auto-refresh scheduled' },
+    { label: 'First-Hour Update', value: '7:45 AM PT', note: 'Validates volume + momentum' },
+    { label: 'Hot Themes', value: 'AI Chips · Defense · EV Supply' }
+  ],
+  picks: [
+    {
+      symbol: 'TSM',
+      company: 'Taiwan Semi',
+      price: '$325.70',
+      change: 3.2,
+      flavorNote: 'Chip supply + NVIDIA partnership chatter',
+      conviction: 'High Conviction'
+    },
+    {
+      symbol: 'LMT',
+      company: 'Lockheed Martin',
+      price: '$448.10',
+      change: 1.4,
+      flavorNote: 'Defense bill flows + international orders',
+      conviction: 'Momentum Snack'
+    },
+    {
+      symbol: 'RIVN',
+      company: 'Rivian',
+      price: '$23.95',
+      change: -0.8,
+      flavorNote: 'Speculative bounce ahead of delivery update',
+      conviction: 'Speculative Bite'
+    }
+  ],
+  marketMood: {
+    temperature: 'Warm & Watchful',
+    caption: 'Futures green, but traders eye CPI preview.',
+    score: 68,
+    tags: ['Growth Tilt', 'AI Flow', 'Earnings Heavy']
+  },
+  watchlistHeatmap: [
+    { symbol: 'NVDA', change: 2.1, direction: 'up', flavor: 'AI orderbook' },
+    { symbol: 'AMD', change: 1.4, direction: 'up', flavor: 'MI300 demand' },
+    { symbol: 'SMCI', change: -0.9, direction: 'down', flavor: 'Cooling chatter' },
+    { symbol: 'PLTR', change: 4.8, direction: 'up', flavor: 'Gov cloud buzz' },
+    { symbol: 'SPY', change: 0.3, direction: 'up', flavor: 'Broad risk-on' },
+    { symbol: 'DIA', change: -0.2, direction: 'down', flavor: 'Dow lagging' }
+  ],
+  snackableInsights: [
+    {
+      title: 'AI CapEx keeps ripping',
+      snippet: 'TSMC suppliers flag high-visibility orders through summer.',
+      action: 'Watch upstream silicon names.'
+    },
+    {
+      title: 'Defense budget moves',
+      snippet: 'Appropriations vote pulled forward two days.',
+      action: 'Look for pre-market volume in primes.'
+    },
+    {
+      title: 'EV tax-credit noise',
+      snippet: 'IRS guidance rumored tonight; expect volatility.',
+      action: 'Set alerts on TSLA, RIVN, GM.'
+    }
+  ],
+  volumeSpikes: [
+    {
+      symbol: 'SOFI',
+      spike: 180,
+      context: 'Call volume 3x average after fintech summit',
+      tasteProfile: 'Retail latte'
+    },
+    {
+      symbol: 'BA',
+      spike: 145,
+      context: 'Headline risk on safety review',
+      tasteProfile: 'Turbulent bite'
+    },
+    {
+      symbol: 'META',
+      spike: 130,
+      context: 'Options flow into AI assistant rumors',
+      tasteProfile: 'Metaverse mocha'
+    }
+  ],
+  portfolioPantry: {
+    label: "Joe's Sample Allocation",
+    allocation: '60% core · 25% swing · 15% lotto',
+    dayChange: '+1.4%',
+    sparkline: [40, 60, 50, 80, 65, 90, 75, 85],
+    note: 'Mock data — swap for real P&L feed later.'
+  },
+  nextBites: [
+    { time: '05:45 AM', text: 'ETL pull social + news sentiment', severity: 'info' },
+    { time: '06:00 AM', text: 'Pre-open picks publish', severity: 'info' },
+    { time: '07:45 AM', text: 'First-hour validation refresh', severity: 'watch' }
+  ]
+};

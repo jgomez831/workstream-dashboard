@@ -4,8 +4,9 @@ A lightweight ops dashboard built with Vite + React + TypeScript and designed fo
 
 ## Features
 - **Mission control hero** with the current flagship deliverable + ETA.
+- **NeonPantry sandwich toggle** that swaps between the Workstream view and the new "Joe’s Daily Stock Picks" scaffold without leaving the shell.
 - **Task board** grouping work into Up Next / In Progress / Completed with priority pills, tags, and owner/due details.
-- **Stats row** for at-a-glance open vs. completed counts.
+- **Stats row** for at-a-glance open vs. completed counts (plus Joe-specific stats when that view is active).
 - **Daily summary cards** listing highlights, decisions, and next steps.
 - **Sub-agent roster** block showing each agent’s role, status, and load bar (ready for future automation).
 - Responsive layout + dark neon theme for a modern but focused look.
@@ -36,6 +37,11 @@ npm run deploy
 ```
 
 The script runs the production build and pushes the contents of `dist` to the `gh-pages` branch, which GitHub Pages serves automatically. Remember to enable Pages for the repository and set the source to `Deploy from branch → gh-pages`.
+
+## Handoff notes
+- The sandwich switch + Joe view placeholders are all data-driven from `src/data/dashboardData.ts`. Swap the mock objects (`joesDailyView`) with API results when ready; every widget already has a content slot.
+- GitHub Pages stays pointed at `docs/`. After any change run `npm run build` and copy the contents of `dist/` into `docs/` so local previews and Pages stay in sync.
+- The Joe widgets are intentionally lightweight (cards, lists, placeholder sparkline). Replace them one by one without touching the view toggle by wiring new components into `JoeDashboard`.
 
 ## Roadmap ideas
 - Interactive forms to add/edit tasks directly from the UI.
