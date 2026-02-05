@@ -174,11 +174,8 @@ function App() {
                         <div className="agent-name-row">
                           <p className="agent-name">{agent.name}</p>
                           {agent.flair === 'manager' && (
-                            <span className="manager-badge">
-                              <span className="manager-icon" aria-hidden="true">
-                                👑
-                              </span>
-                              Manager
+                            <span className="manager-icon-inline" aria-hidden="true">
+                              👑
                             </span>
                           )}
                         </div>

@@ -99,15 +99,6 @@ export const taskBoard: Record<'todo' | 'inProgress' | 'done', Column> = {
     title: 'Up Next',
     tasks: [
       {
-        id: 'todo-1',
-        title: 'Powerball: finalize 50 + 50 number sets',
-        owner: 'Ion',
-        due: 'Feb 5',
-        priority: 'high',
-        tags: ['lottery', 'analysis'],
-        notes: 'Need Monterey-weighted logic + general mix before write-up lock.'
-      },
-      {
         id: 'todo-2',
         title: 'Daily memory backup → GitHub',
         owner: 'Ion',
@@ -132,30 +123,21 @@ export const taskBoard: Record<'todo' | 'inProgress' | 'done', Column> = {
     tasks: [
       {
         id: 'prog-1',
-        title: 'Powerball insights write-up + number set QA',
+        title: 'Dashboard automation pipeline',
         owner: 'Ion',
-        due: 'Feb 4',
+        due: 'Feb 6',
         priority: 'high',
-        tags: ['lottery', 'report'],
-        notes: 'Charts locked; QA on 50+50 sets underway.'
+        tags: ['dashboard', 'automation'],
+        notes: 'Build watchdog + scheduled ETL to auto-refresh Workstream/Joe views.'
       },
       {
         id: 'prog-2',
-        title: 'Dashboard: sandwich toggle + Joe’s view',
-        owner: 'StackCanvas',
-        due: 'Feb 5',
-        priority: 'high',
-        tags: ['dashboard', 'UI'],
-        notes: 'Implement view switch + placeholders for stock widgets.'
-      },
-      {
-        id: 'prog-3',
-        title: 'Task board data refresh',
+        title: 'Week 5 Final Exam Prep',
         owner: 'Ion',
-        due: 'Feb 4',
+        due: 'Feb 9',
         priority: 'medium',
-        tags: ['dashboard'],
-        notes: 'Update board to reflect new assignments + cadence.'
+        tags: ['cyb200', 'exam'],
+        notes: 'Outline study plan + key topics before the 60-pt final.'
       }
     ]
   },
@@ -164,21 +146,30 @@ export const taskBoard: Record<'todo' | 'inProgress' | 'done', Column> = {
     tasks: [
       {
         id: 'done-1',
-        title: 'Oil dividend playbook delivery',
+        title: 'Week 5 Discussion – CYB200',
         owner: 'Ion',
-        due: 'Feb 4',
+        due: 'Feb 5',
         priority: 'medium',
-        tags: ['dividends'],
-        notes: 'Sent DOCX + MD via Telegram.'
+        tags: ['cyb200', 'discussion'],
+        notes: 'Drafted 250-word response + saved docx for submission.'
       },
       {
         id: 'done-2',
-        title: 'Cross-sector dividend spreadsheet refresh',
+        title: 'Week 5 Assignment – CYB200',
         owner: 'Ion',
-        due: 'Feb 4',
+        due: 'Feb 9',
         priority: 'medium',
-        tags: ['dividends', 'excel'],
-        notes: 'Per-payout view + cadence columns added.'
+        tags: ['cyb200', 'assignment'],
+        notes: 'Created Learning Activity Report Week 5 docx with Ch. 9 answers.'
+      },
+      {
+        id: 'done-3',
+        title: 'Powerball analysis package',
+        owner: 'Ion',
+        due: 'Feb 5',
+        priority: 'high',
+        tags: ['lottery', 'report'],
+        notes: 'Delivered docx + pick banks + charts to user via Telegram.'
       }
     ]
   }
