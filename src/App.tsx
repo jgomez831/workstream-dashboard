@@ -241,6 +241,7 @@ const SandwichSwitch = ({
   onChange: (view: ViewMode) => void;
 }) => {
   const activeIndex = viewOptions.findIndex((option) => option.key === activeView);
+  const optionCount = viewOptions.length;
 
   return (
     <div
@@ -248,7 +249,7 @@ const SandwichSwitch = ({
       role="group"
       aria-label="Sandwich view switch"
       data-active={activeView}
-      style={{ ['--active-index' as any]: activeIndex }}
+      style={{ ['--active-index' as any]: activeIndex, ['--option-count' as any]: optionCount }}
     >
       <span className="sandwich-indicator" aria-hidden />
       <div className="sandwich-fill">
