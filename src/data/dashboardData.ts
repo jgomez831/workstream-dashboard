@@ -29,154 +29,11 @@ export type Agent = {
   flair?: string;
 };
 
-export const taskBoard: Record<'todo' | 'inProgress' | 'done', Column> = {
-  todo: {
-    title: 'Up Next',
-    tasks: [
-      {
-        id: 'todo-1',
-        title: 'Powerball: finalize 50 + 50 number sets',
-        owner: 'Primary',
-        due: 'Feb 5',
-        priority: 'high',
-        tags: ['lottery', 'analysis'],
-        notes: 'Need Monterey-weighted logic + general mix before write-up lock.'
-      },
-      {
-        id: 'todo-2',
-        title: 'Daily memory backup → GitHub',
-        owner: 'Primary',
-        due: 'Daily 22:00',
-        priority: 'medium',
-        tags: ['ops'],
-        notes: 'Push snapshot into jgomez831/memory-backups each evening.'
-      },
-      {
-        id: 'todo-3',
-        title: 'Joe’s Daily Stock Picks automation plan',
-        owner: 'Primary',
-        due: 'Feb 5',
-        priority: 'medium',
-        tags: ['stocks', 'automation'],
-        notes: 'Wire 6:00 pre-open + 7:45 confirmation cadence into dashboard data layer.'
-      }
-    ]
-  },
-  inProgress: {
-    title: 'In Progress',
-    tasks: [
-      {
-        id: 'prog-1',
-        title: 'Powerball insights write-up + number set QA',
-        owner: 'Primary',
-        due: 'Feb 4',
-        priority: 'high',
-        tags: ['lottery', 'report'],
-        notes: 'Charts locked; QA on 50+50 sets underway.'
-      },
-      {
-        id: 'prog-2',
-        title: 'Dashboard: sandwich toggle + Joe’s view',
-        owner: 'StackCanvas',
-        due: 'Feb 5',
-        priority: 'high',
-        tags: ['dashboard', 'UI'],
-        notes: 'Implement view switch + placeholders for stock widgets.'
-      },
-      {
-        id: 'prog-3',
-        title: 'Task board data refresh',
-        owner: 'Primary',
-        due: 'Feb 4',
-        priority: 'medium',
-        tags: ['dashboard'],
-        notes: 'Update board to reflect new assignments + cadence.'
-      }
-    ]
-  },
-  done: {
-    title: 'Completed',
-    tasks: [
-      {
-        id: 'done-1',
-        title: 'Oil dividend playbook delivery',
-        owner: 'Primary',
-        due: 'Feb 4',
-        priority: 'medium',
-        tags: ['dividends'],
-        notes: 'Sent DOCX + MD via Telegram.'
-      },
-      {
-        id: 'done-2',
-        title: 'Cross-sector dividend spreadsheet refresh',
-        owner: 'Primary',
-        due: 'Feb 4',
-        priority: 'medium',
-        tags: ['dividends', 'excel'],
-        notes: 'Per-payout view + cadence columns added.'
-      }
-    ]
-  }
+export type StatCard = {
+  label: string;
+  value: number;
+  note?: string;
 };
-
-export type StatCard = { label: string; value: number; note?: string };
-
-export const stats: StatCard[] = [
-  { label: 'Open Tasks', value: taskBoard.todo.tasks.length + taskBoard.inProgress.tasks.length },
-  { label: 'Completed Today', value: taskBoard.done.tasks.length },
-  { label: 'Focus Streams', value: 3 }
-];
-
-export const summaries: DailySummary[] = [
-  {
-    date: 'Wed • Feb 4, 2026',
-    highlights: [
-      'Dividend playbooks (oil + cross-sector) delivered as DOCX, MD, and XLSX.',
-      'Powerball dataset merged with jackpot location metadata; charts 80% styled.'
-    ],
-    decisions: [
-      'Migrated long scrapes to DigitalOcean droplet.',
-      'Green-lit GitHub Pages dashboard for shared visibility.'
-    ],
-    nextSteps: [
-      'Finish Powerball number simulations + Monterey overlays.',
-      'Publish dashboard + link workflow in README.'
-    ]
-  }
-];
-
-export const agents: Agent[] = [
-  {
-    name: 'Primary',
-    role: 'Ops & Research Lead',
-    status: 'active',
-    focus: 'Powerball delivery + orchestration',
-    load: 90,
-    flair: 'Gold Manager'
-  },
-  {
-    name: 'StackCanvas',
-    role: 'Dashboard Dev Lead',
-    status: 'active',
-    focus: 'Sandwich toggle + Joe’s stock widgets',
-    load: 70
-  },
-  {
-    name: 'SignalFire',
-    role: 'Data Viz Scout',
-    status: 'standby',
-    focus: 'Chart themes & layout experiments',
-    load: 20
-  },
-  {
-    name: 'Ledger',
-    role: 'Data Integrity Monitor',
-    status: 'standby',
-    focus: 'Dividend + task data QA hooks',
-    load: 10
-  }
-];
-
 
 export type JoeStat = {
   label: string;
@@ -220,14 +77,6 @@ export type VolumeSpike = {
   tasteProfile: string;
 };
 
-export type PortfolioPantry = {
-  label: string;
-  allocation: string;
-  dayChange: string;
-  sparkline: number[];
-  note: string;
-};
-
 export type NextBiteAlert = {
   time: string;
   text: string;
@@ -241,9 +90,169 @@ export type JoeDashboardData = {
   watchlistHeatmap: HeatmapCell[];
   snackableInsights: SnackableInsight[];
   volumeSpikes: VolumeSpike[];
-  portfolioPantry: PortfolioPantry;
   nextBites: NextBiteAlert[];
+  preOpenDate: string;
 };
+
+export const taskBoard: Record<'todo' | 'inProgress' | 'done', Column> = {
+  todo: {
+    title: 'Up Next',
+    tasks: [
+      {
+        id: 'todo-1',
+        title: 'Powerball: finalize 50 + 50 number sets',
+        owner: 'Ion',
+        due: 'Feb 5',
+        priority: 'high',
+        tags: ['lottery', 'analysis'],
+        notes: 'Need Monterey-weighted logic + general mix before write-up lock.'
+      },
+      {
+        id: 'todo-2',
+        title: 'Daily memory backup → GitHub',
+        owner: 'Ion',
+        due: 'Daily 22:00',
+        priority: 'medium',
+        tags: ['ops'],
+        notes: 'Push snapshot into jgomez831/memory-backups each evening.'
+      },
+      {
+        id: 'todo-3',
+        title: 'Joe’s Daily Stock Picks automation plan',
+        owner: 'Ion',
+        due: 'Feb 5',
+        priority: 'medium',
+        tags: ['stocks', 'automation'],
+        notes: 'Wire 6:00 pre-open + 7:45 confirmation cadence into dashboard data layer.'
+      }
+    ]
+  },
+  inProgress: {
+    title: 'In Progress',
+    tasks: [
+      {
+        id: 'prog-1',
+        title: 'Powerball insights write-up + number set QA',
+        owner: 'Ion',
+        due: 'Feb 4',
+        priority: 'high',
+        tags: ['lottery', 'report'],
+        notes: 'Charts locked; QA on 50+50 sets underway.'
+      },
+      {
+        id: 'prog-2',
+        title: 'Dashboard: sandwich toggle + Joe’s view',
+        owner: 'StackCanvas',
+        due: 'Feb 5',
+        priority: 'high',
+        tags: ['dashboard', 'UI'],
+        notes: 'Implement view switch + placeholders for stock widgets.'
+      },
+      {
+        id: 'prog-3',
+        title: 'Task board data refresh',
+        owner: 'Ion',
+        due: 'Feb 4',
+        priority: 'medium',
+        tags: ['dashboard'],
+        notes: 'Update board to reflect new assignments + cadence.'
+      }
+    ]
+  },
+  done: {
+    title: 'Completed',
+    tasks: [
+      {
+        id: 'done-1',
+        title: 'Oil dividend playbook delivery',
+        owner: 'Ion',
+        due: 'Feb 4',
+        priority: 'medium',
+        tags: ['dividends'],
+        notes: 'Sent DOCX + MD via Telegram.'
+      },
+      {
+        id: 'done-2',
+        title: 'Cross-sector dividend spreadsheet refresh',
+        owner: 'Ion',
+        due: 'Feb 4',
+        priority: 'medium',
+        tags: ['dividends', 'excel'],
+        notes: 'Per-payout view + cadence columns added.'
+      }
+    ]
+  }
+};
+
+export const stats: StatCard[] = [
+  { label: 'Open Tasks', value: taskBoard.todo.tasks.length + taskBoard.inProgress.tasks.length },
+  { label: 'Completed Today', value: taskBoard.done.tasks.length },
+  { label: 'Focus Streams', value: 3 }
+];
+
+export const summaries: DailySummary[] = [
+  {
+    date: 'Wed • Feb 4, 2026',
+    highlights: [
+      'Dividend playbooks (oil + cross-sector) delivered as DOCX, MD, and XLSX.',
+      'Powerball dataset merged with jackpot location metadata; charts 80% styled.'
+    ],
+    decisions: [
+      'Migrated long scrapes to DigitalOcean droplet.',
+      'Green-lit GitHub Pages dashboard for shared visibility.'
+    ],
+    nextSteps: [
+      'Finish Powerball number simulations + Monterey overlays.',
+      'Publish dashboard + link workflow in README.'
+    ]
+  }
+];
+
+export const agents: Agent[] = [
+  {
+    name: 'Ion',
+    role: 'Ops & Research Lead',
+    status: 'active',
+    focus: 'Powerball delivery + orchestration',
+    load: 70,
+    flair: '👑 Ion'
+  },
+  {
+    name: 'StackCanvas',
+    role: 'Dashboard Dev Lead',
+    status: 'standby',
+    focus: 'Sandwich toggle + Joe’s stock widgets',
+    load: 35
+  },
+  {
+    name: 'SandwichPilot',
+    role: 'Dashboard Follow-up',
+    status: 'active',
+    focus: 'Flair, datestamp, deployment',
+    load: 45
+  },
+  {
+    name: 'LottoForge',
+    role: 'Powerball Analyst',
+    status: 'active',
+    focus: '50+50 pick QA',
+    load: 50
+  },
+  {
+    name: 'SignalFire',
+    role: 'Data Viz Scout',
+    status: 'standby',
+    focus: 'Chart themes & layout experiments',
+    load: 10
+  },
+  {
+    name: 'Ledger',
+    role: 'Data Integrity Monitor',
+    status: 'standby',
+    focus: 'Dividend + task data QA hooks',
+    load: 10
+  }
+];
 
 export const joesDailyView: JoeDashboardData = {
   stats: [
@@ -328,16 +337,10 @@ export const joesDailyView: JoeDashboardData = {
       tasteProfile: 'Metaverse mocha'
     }
   ],
-  portfolioPantry: {
-    label: "Joe's Sample Allocation",
-    allocation: '60% core · 25% swing · 15% lotto',
-    dayChange: '+1.4%',
-    sparkline: [40, 60, 50, 80, 65, 90, 75, 85],
-    note: 'Mock data — swap for real P&L feed later.'
-  },
   nextBites: [
     { time: '05:45 AM', text: 'ETL pull social + news sentiment', severity: 'info' },
     { time: '06:00 AM', text: 'Pre-open picks publish', severity: 'info' },
     { time: '07:45 AM', text: 'First-hour validation refresh', severity: 'watch' }
-  ]
+  ],
+  preOpenDate: 'Thu • Feb 5 2026'
 };

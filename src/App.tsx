@@ -164,7 +164,17 @@ function App() {
                   <div key={agent.name} className="agent-card">
                     <div className="agent-header">
                       <div>
-                        <p className="agent-name">{agent.name}</p>
+                        <div className="agent-name-row">
+                          <p className="agent-name">{agent.name}</p>
+                          {agent.flair === 'manager' && (
+                            <span className="manager-badge">
+                              <span className="manager-icon" aria-hidden="true">
+                                👑
+                              </span>
+                              Manager
+                            </span>
+                          )}
+                        </div>
                         <p className="agent-role">{agent.role}</p>
                       </div>
                       <span className={`pill pill-${agent.status}`}>
@@ -224,19 +234,39 @@ const SandwichSwitch = ({
   </div>
 );
 
-const JoeDashboard = ({ data }: { data: JoeDashboardData }) => (
-  <div className="joes-view">
-    <section className="stats joes-stats">
-      {data.stats.map((card) => (
-        <div key={card.label} className="stat-card">
-          <p className="stat-label">{card.label}</p>
-          <p className="stat-value">{card.value}</p>
-          {card.note && <p className="stat-note">{card.note}</p>}
-        </div>
-      ))}
-    </section>
+const JoeDashboard = ({ data }: { data: JoeDashboardData }) => {
+  const today = new Date();
+  const formattedDate = today.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+  const condensedDate = `${today.toLocaleDateString('en-US', { weekday: 'short' })} • ${today.toLocaleDateString('en-US', { month: 'short' })} ${today.getDate()} ${today.getFullYear()}`;
+  const isoDate = today.toISOString().split('T')[0];
 
-    <article className="panel joes-panel picks-panel">
+  return (
+    <div className="joes-view">
+      <section className="stats joes-stats">
+        {data.stats.map((card) => {
+          const isPreOpen = card.label === 'Pre-Open Preview';
+
+          return (
+            <div key={card.label} className={`stat-card ${isPreOpen ? 'stat-card-preopen' : ''}`}>
+              {isPreOpen && (
+                <time className="preopen-datestamp" dateTime={isoDate} aria-label={formattedDate}>
+                  {condensedDate}
+                </time>
+              )}
+              <p className="stat-label">{card.label}</p>
+              <p className="stat-value">{card.value}</p>
+              {card.note && <p className="stat-note">{card.note}</p>}
+            </div>
+          );
+        })}
+      </section>
+
+      <article className="panel joes-panel picks-panel">
       <div className="panel-head">
         <h2>Daily Picks Board</h2>
         <p className="panel-subhead">Placeholder data — swap in live feed once ready.</p>
@@ -342,21 +372,6 @@ const JoeDashboard = ({ data }: { data: JoeDashboardData }) => (
     </section>
 
     <section className="joes-grid">
-      <article className="panel joes-panel pantry-panel">
-        <div className="panel-head">
-          <h3>{data.portfolioPantry.label}</h3>
-          <p className="panel-subhead">Allocation + sparkline placeholder.</p>
-        </div>
-        <p className="pantry-allocation">{data.portfolioPantry.allocation}</p>
-        <p className="pantry-change">Day change: {data.portfolioPantry.dayChange}</p>
-        <div className="pantry-chart" aria-hidden>
-          {data.portfolioPantry.sparkline.map((value, index) => (
-            <span key={`${value}-${index}`} style={{ height: `${value}%` }} />
-          ))}
-        </div>
-        <p className="pantry-note">{data.portfolioPantry.note}</p>
-      </article>
-
       <article className="panel joes-panel nextbite-panel">
         <div className="panel-head">
           <h3>Next Bite Alerts</h3>
@@ -376,6 +391,7 @@ const JoeDashboard = ({ data }: { data: JoeDashboardData }) => (
       </article>
     </section>
   </div>
-);
+  );
+};
 
 export default App;
