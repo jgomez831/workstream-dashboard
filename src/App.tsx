@@ -221,8 +221,13 @@ const SandwichSwitch = ({
   activeView: ViewMode;
   onChange: (view: ViewMode) => void;
 }) => (
-  <div className="sandwich-switch" role="group" aria-label="Sandwich view switch">
-    <div className="bun bun-top" aria-hidden />
+  <div
+    className="sandwich-switch"
+    role="group"
+    aria-label="Sandwich view switch"
+    data-active={activeView}
+  >
+    <span className="sandwich-indicator" aria-hidden />
     <div className="sandwich-fill">
       {viewOptions.map((option) => (
         <button
@@ -237,7 +242,6 @@ const SandwichSwitch = ({
         </button>
       ))}
     </div>
-    <div className="bun bun-bottom" aria-hidden />
   </div>
 );
 
