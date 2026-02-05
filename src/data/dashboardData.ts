@@ -94,6 +94,59 @@ export type JoeDashboardData = {
   preOpenDate: string;
 };
 
+export type DropCard = {
+  name: string;
+  releaseDate: string;
+  type: string;
+  channel: string;
+  price: string;
+};
+
+export type StockXPulse = {
+  shoe: string;
+  price: string;
+  change: string;
+  trend: number[];
+};
+
+export type HeatMeter = {
+  label: string;
+  value: number;
+  tags: string[];
+};
+
+export type SneakerEvent = {
+  date: string;
+  shoe: string;
+  channel: string;
+  icon: string;
+};
+
+export type WatchItem = {
+  shoe: string;
+  target: string;
+  status: string;
+};
+
+export type RomanDashboardData = {
+  heroDrop: string;
+  heroCountdown: string;
+  upcomingDrops: DropCard[];
+  stockxPulse: StockXPulse[];
+  heatMeter: HeatMeter;
+  sizeAlerts: DropCard[];
+  calendar: SneakerEvent[];
+  watchlist: WatchItem[];
+  rumors: string[];
+  lockerStats: {
+    collectionCount: number;
+    deadstockPct: number;
+    avgValue: string;
+    favoriteSilhouette: string;
+  };
+};
+
+
 export const taskBoard: Record<'todo' | 'inProgress' | 'done', Column> = {
   todo: {
     title: 'Up Next',
@@ -334,4 +387,33 @@ export const joesDailyView: JoeDashboardData = {
     { time: '07:45 AM', text: 'First-hour validation refresh', severity: 'watch' }
   ],
   preOpenDate: 'Thu • Feb 5 2026'
+};
+
+export const romanDashboard: RomanDashboardData = {
+  heroDrop: "Air Jordan 4 'Infrared Pulse'",
+  heroCountdown: '02:17:43',
+  upcomingDrops: [
+    { name: "Air Jordan 1 'Black Toe Reimagined'", releaseDate: 'Feb 08', type: 'SNKRS Draw', channel: 'SNKRS', price: '$200' },
+    { name: "Nike Dunk Low 'Panda'", releaseDate: 'Feb 10', type: 'Restock', channel: 'Nike.com', price: '$115' }
+  ],
+  stockxPulse: [
+    { shoe: "Jordan 4 Bred Reimagined", price: '$410', change: '+4.5% vs last week', trend: [390, 402, 398, 410] },
+    { shoe: "Travis Scott Mocha 1", price: '$1,380', change: '-1.8%', trend: [1420, 1410, 1400, 1380] }
+  ],
+  heatMeter: { label: 'Heat Index', value: 82, tags: ['SNKRS', 'Discord', 'IG Buzz'] },
+  sizeAlerts: [
+    { name: 'AJ4 Bred Reimagined', releaseDate: 'Size 9.5', type: 'WAITLIST', channel: 'SNKRS', price: '—' },
+    { name: 'AJ4 Bred Reimagined', releaseDate: 'Size 10', type: 'LIVE RAFFLE', channel: 'END.', price: '$225' }
+  ],
+  calendar: [
+    { date: 'Feb 06', shoe: 'Jordan 5 Olive', channel: 'Boutiques', icon: '🟢' },
+    { date: 'Feb 08', shoe: 'AJ1 Black Toe', channel: 'SNKRS', icon: '🔴' },
+    { date: 'Feb 10', shoe: 'Dunk Low Panda', channel: 'Nike.com', icon: '⚪️' }
+  ],
+  watchlist: [
+    { shoe: 'AJ4 Bred Reimagined', target: 'Notify < $350', status: 'Watching' },
+    { shoe: 'Nike Dunk SB Yuto', target: 'Notify < $280', status: 'Watching' }
+  ],
+  rumors: ['Shock drop rumored for Travis Scott Cut the Check on Feb 7', 'Union x Jordan 1 restock whispers on Discord'],
+  lockerStats: { collectionCount: 37, deadstockPct: 42, avgValue: '$520', favoriteSilhouette: 'Jordan 4' }
 };

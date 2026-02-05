@@ -6,11 +6,13 @@ import {
   taskBoard,
   stats,
   joesDailyView,
+  romanDashboard,
   type Task,
-  type JoeDashboardData
+  type JoeDashboardData,
+  type RomanDashboardData
 } from './data/dashboardData';
 
-type ViewMode = 'workstream' | 'joes';
+type ViewMode = 'workstream' | 'joes' | 'roman';
 
 const heroCopy: Record<ViewMode, { label: string; value: string; note: string }> = {
   workstream: {
@@ -22,6 +24,11 @@ const heroCopy: Record<ViewMode, { label: string; value: string; note: string }>
     label: 'Market Mood',
     value: joesDailyView.marketMood.temperature,
     note: joesDailyView.marketMood.caption
+  },
+  roman: {
+    label: 'Next Drop',
+    value: romanDashboard.heroDrop,
+    note: romanDashboard.heroCountdown
   }
 };
 
@@ -33,8 +40,13 @@ const viewOptions: { key: ViewMode; label: string; blurb: string }[] = [
   },
   {
     key: 'joes',
-    label: "Joe's Daily Stock Picks",
+    label: "Joe's Daily",
     blurb: 'Picks · Mood · Snackables'
+  },
+  {
+    key: 'roman',
+    label: "Roman's Heat Check",
+    blurb: 'Drops · Watchlist · Alerts'
   }
 ];
 
@@ -59,18 +71,26 @@ function App() {
       <header className="hero">
         <div>
           <p className="eyebrow">Mission Control</p>
-          {viewMode === 'workstream' ? (
-            <h1>Workstream Dashboard</h1>
-          ) : (
+          {viewMode === 'workstream' && <h1>Workstream Dashboard</h1>}
+          {viewMode === 'joes' && (
             <div className="joes-title-wrapper">
               <h1 className="joes-title">JOE'S DAILY</h1>
               <p className="joes-subtitle">🔥 Stocks</p>
             </div>
           )}
+          {viewMode === 'roman' && (
+            <div className="roman-title-wrapper">
+              <h1 className="roman-title">Roman's Heat Check</h1>
+              <p className="roman-subtitle">Nike &amp; Jordan Drop Radar</p>
+            </div>
+          )}
           <p className="subtitle">
-            {viewMode === 'workstream'
-              ? 'Live view of priorities, progress, and daily summaries. Designed for GitHub Pages and ready for future interactive controls.'
-              : 'Sandwich-style toggle from NeonPantry brings Joe’s desk into the same shell. All widgets are scaffolded with mock data so API wiring can drop in later.'}
+            {viewMode === 'workstream' &&
+              'Live view of priorities, progress, and daily summaries. Designed for GitHub Pages and ready for future interactive controls.'}
+            {viewMode === 'joes' &&
+              'Sandwich-style toggle from NeonPantry brings Joe’s desk into the same shell. All widgets are scaffolded with mock data so API wiring can drop in later.'}
+            {viewMode === 'roman' &&
+              'Roman’s Heat Check tracks Nike/Jordan drops with StockX-inspired cards, ready for live feed wiring.'}
           </p>
         </div>
         <div className="hero-card">
@@ -196,8 +216,10 @@ function App() {
             </article>
           </section>
         </>
-      ) : (
+      ) : viewMode === 'joes' ? (
         <JoeDashboard data={joesDailyView} />
+      ) : (
+        <RomanDashboard data={romanDashboard} />
       )}
 
       <footer className="footer">
@@ -217,30 +239,35 @@ const SandwichSwitch = ({
 }: {
   activeView: ViewMode;
   onChange: (view: ViewMode) => void;
-}) => (
-  <div
-    className="sandwich-switch"
-    role="group"
-    aria-label="Sandwich view switch"
-    data-active={activeView}
-  >
-    <span className="sandwich-indicator" aria-hidden />
-    <div className="sandwich-fill">
-      {viewOptions.map((option) => (
-        <button
-          key={option.key}
-          type="button"
-          className={`sandwich-option ${activeView === option.key ? 'is-active' : ''}`}
-          onClick={() => onChange(option.key)}
-          aria-pressed={activeView === option.key}
-        >
-          <span className="option-label">{option.label}</span>
-          <span className="option-blurb">{option.blurb}</span>
-        </button>
-      ))}
+}) => {
+  const activeIndex = viewOptions.findIndex((option) => option.key === activeView);
+
+  return (
+    <div
+      className="sandwich-switch"
+      role="group"
+      aria-label="Sandwich view switch"
+      data-active={activeView}
+      style={{ ['--active-index' as any]: activeIndex }}
+    >
+      <span className="sandwich-indicator" aria-hidden />
+      <div className="sandwich-fill">
+        {viewOptions.map((option) => (
+          <button
+            key={option.key}
+            type="button"
+            className={`sandwich-option ${activeView === option.key ? 'is-active' : ''}`}
+            onClick={() => onChange(option.key)}
+            aria-pressed={activeView === option.key}
+          >
+            <span className="option-label">{option.label}</span>
+            <span className="option-blurb">{option.blurb}</span>
+          </button>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const JoeDashboard = ({ data }: { data: JoeDashboardData }) => {
   const today = new Date();
@@ -401,5 +428,109 @@ const JoeDashboard = ({ data }: { data: JoeDashboardData }) => {
   </div>
   );
 };
+
+const RomanDashboard = ({ data }: { data: RomanDashboardData }) => (
+  <div className="roman-view">
+    <section className="roman-hero">
+      <div>
+        <p className="roman-hero-label">Next heat drop</p>
+        <h2>{data.heroDrop}</h2>
+        <p className="roman-hero-countdown">Drops in {data.heroCountdown}</p>
+      </div>
+      <div className="roman-hero-card">
+        <p>Collection</p>
+        <h3>{data.lockerStats.collectionCount} pairs</h3>
+        <p>Deadstock {data.lockerStats.deadstockPct}% · Avg value {data.lockerStats.avgValue}</p>
+      </div>
+    </section>
+
+    <section className="roman-grid">
+      <article className="panel roman-panel">
+        <div className="panel-head">
+          <h3>Upcoming Drops</h3>
+        </div>
+        <div className="roman-drop-grid">
+          {data.upcomingDrops.map((drop) => (
+            <div key={drop.name} className="roman-drop-card">
+              <p className="drop-date">{drop.releaseDate}</p>
+              <p className="drop-name">{drop.name}</p>
+              <p className="drop-meta">{drop.type} · {drop.channel}</p>
+              <p className="drop-price">{drop.price}</p>
+            </div>
+          ))}
+        </div>
+      </article>
+
+      <article className="panel roman-panel">
+        <div className="panel-head">
+          <h3>StockX Pulse</h3>
+        </div>
+        <div className="roman-pulse-list">
+          {data.stockxPulse.map((pulse) => (
+            <div key={pulse.shoe} className="pulse-row">
+              <div>
+                <p className="pulse-name">{pulse.shoe}</p>
+                <p className="pulse-change">{pulse.change}</p>
+              </div>
+              <p className="pulse-price">{pulse.price}</p>
+            </div>
+          ))}
+        </div>
+      </article>
+
+      <article className="panel roman-panel">
+        <div className="panel-head">
+          <h3>Heat Meter</h3>
+        </div>
+        <div className="roman-heat-meter">
+          <div className="heat-circle">{data.heatMeter.value}%</div>
+          <ul>
+            {data.heatMeter.tags.map((tag) => (
+              <li key={tag}>{tag}</li>
+            ))}
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <section className="roman-calendar">
+      {data.calendar.map((event) => (
+        <div key={`${event.date}-${event.shoe}`} className="calendar-node">
+          <span className="calendar-date">{event.date}</span>
+          <p>{event.shoe}</p>
+          <span className="calendar-channel">{event.channel}</span>
+        </div>
+      ))}
+    </section>
+
+    <section className="roman-lists">
+      <article className="panel roman-panel">
+        <div className="panel-head">
+          <h3>Watchlist</h3>
+        </div>
+        <ul className="watchlist">
+          {data.watchlist.map((entry) => (
+            <li key={entry.shoe}>
+              <p className="watch-name">{entry.shoe}</p>
+              <p className="watch-target">{entry.target}</p>
+              <span className="watch-status">{entry.status}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+      <article className="panel roman-panel">
+        <div className="panel-head">
+          <h3>Shock Drop Rumors</h3>
+        </div>
+        <ul className="rumor-list">
+          {data.rumors.map((rumor) => (
+            <li key={rumor}>{rumor}</li>
+          ))}
+        </ul>
+      </article>
+    </section>
+  </div>
+);
+
 
 export default App;
