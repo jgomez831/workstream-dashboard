@@ -19,7 +19,7 @@ body {
 }
 
 .app-shell {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 3rem 1.5rem 4rem;
   display: flex;
@@ -990,4 +990,9 @@ code {
   background: rgba(255,255,255,0.03);
   padding: 0.6rem;
   border-radius: 0.8rem;
+}
+
+@media (min-width: 1200px) {
+  .roman-grid { grid-template-columns: repeat(3, minmax(260px, 1fr)); }
+  .roman-calendar { grid-template-columns: repeat(6, minmax(120px, 1fr)); }
 }
