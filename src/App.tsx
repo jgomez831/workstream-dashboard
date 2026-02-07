@@ -16,9 +16,9 @@ type ViewMode = 'workstream' | 'joes' | 'roman';
 
 const heroCopy: Record<ViewMode, { label: string; value: string; note: string }> = {
   workstream: {
-    label: 'Powerball Report',
-    value: '90% → polishing write-up + number sets',
-    note: 'ETA ≈ 60 min (charts, 50+50 mixes, narrative)'
+    label: 'Dashboard Refresh',
+    value: 'Scrubbing copy + prepping redeploy',
+    note: 'ETA ≈ 60 min (content pass + build)'
   },
   joes: {
     label: 'Market Mood',

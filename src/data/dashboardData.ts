@@ -217,12 +217,12 @@ export const taskBoard: Record<'todo' | 'inProgress' | 'done', Column> = {
       },
       {
         id: 'done-3',
-        title: 'Powerball analysis package',
+        title: 'Dashboard copy refresh + deployment prep',
         owner: 'Ion',
         due: 'Feb 5',
         priority: 'high',
-        tags: ['lottery', 'report'],
-        notes: 'Delivered docx + pick banks + charts to user via Telegram.'
+        tags: ['dashboard', 'content'],
+        notes: 'Scrubbed outdated references, queued new build for publication.'
       }
     ]
   }
@@ -239,14 +239,14 @@ export const summaries: DailySummary[] = [
     date: 'Wed • Feb 4, 2026',
     highlights: [
       'Dividend playbooks (oil + cross-sector) delivered as DOCX, MD, and XLSX.',
-      'Powerball dataset merged with jackpot location metadata; charts 80% styled.'
+      'Dashboard copy scrub underway to remove stale references.'
     ],
     decisions: [
       'Migrated long scrapes to DigitalOcean droplet.',
       'Green-lit GitHub Pages dashboard for shared visibility.'
     ],
     nextSteps: [
-      'Finish Powerball number simulations + Monterey overlays.',
+      'Finalize dashboard copy refresh + rebuild the static site.',
       'Publish dashboard + link workflow in README.'
     ]
   }
@@ -257,7 +257,7 @@ export const agents: Agent[] = [
     name: 'Ion',
     role: 'Ops & Research Lead',
     status: 'active',
-    focus: 'Powerball delivery + orchestration',
+    focus: 'Dashboard copy cleanup + orchestration',
     load: 70,
     flair: '👑 Ion'
   },
@@ -274,13 +274,6 @@ export const agents: Agent[] = [
     status: 'active',
     focus: 'Flair, datestamp, deployment',
     load: 45
-  },
-  {
-    name: 'LottoForge',
-    role: 'Powerball Analyst',
-    status: 'active',
-    focus: '50+50 pick QA',
-    load: 50
   },
   {
     name: 'SignalFire',
